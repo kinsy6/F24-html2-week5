@@ -97,16 +97,208 @@ footer p{
 	background: lightblue;
 }
 
+.shape1:nth-child(1) {
+	animation-name: pendulum;
+	animation-duration: 3s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	/* tells the animation to go foward and backward * */
+}
+
 .shape1:nth-child(2) {
 	transform: rotate(45deg);
+
+	/* transition tells an element to animate or change
+	all means any change will be animated */
+	transition: all 2s;
+}
+
+.shape1:nth-child(2):hover {
+	transform: rotate(200deg);
 }
 
 .shape1:nth-child(3) {
 	transform: scale(0.5 0.75);
+	/* transition: all 2s; */
+	transition: background-color 2s, transform 50ms;
+	animation-name: complex-jump 3s ease-in-out infinite;
+}
+
+.shape1:nth-child(3):hover {
+	background-color: red;
+}
+
+.shape1:nth-child(3):active {
+	transform: scale(4, 4);
 }
 
 .shape1:nth-child(4) {
 	transform: skew(-30deg, 40deg);
 	/* we can also use skewX() or skewY() to have it horizontaly or verticaly */
+	animation-name: jump;
+	animation-duration: 750ms;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	animation-delay: 1s;
 }
 
+.shape1:nth-child(5) {
+	transform: rotate(20deg) scale(0.8) skew(10deg, 40deg);
+	transition: all 2s;
+	animation-name: jump;
+	animation-duration: 2s;
+	/* other animation properties */
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite; /* or set number of times */
+}
+
+.shape1:nth-child(5):hover {
+	transform: rotate(270deg) scale(2.3) skew(50deg, 25deg);
+}
+
+/* ************************************
+             Transformer
+*************************************** */
+
+/* keyframes defines an animation - inside you set up how the animation will play
+they are defines by % */
+@keyframes jump {
+	/* in order to make the animation work, you have to call it by name on an element. */
+    50% {
+		transform: translate(0, 100px);
+	}
+}
+
+@keyframes pendulum {
+	0%,
+	100% {
+        /* transform-origin sets the anchor point for the object to move */
+		transform-origin: -100px;
+	}
+
+	0% {
+		transform: rotate(77deg);
+	}
+
+	100% {
+		transform: rotate(-45deg);
+	}
+}
+
+@keyframes complex-jump {
+	5% {
+		transform: scaleY(0.9);
+		transform: translate(0);
+	}
+
+	10% {
+		transform: skaleY(1.1);
+	}
+
+	50% {
+		transform: scaleY(1);
+		transform: translate(-100px);
+	}
+
+	90% {
+		transform: scale(1);
+	}
+
+	95% {
+		transform: scale(0.1);
+		transform: translateY(0);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+/* ************************************
+             SLIDER
+*************************************** */
+
+.slider {
+	margin: 30px auto 0;
+	width: 80%;
+	text-align: center;
+	overflow: hidden;
+}
+
+.slideback {
+	position: relative;
+}
+
+.slideback > img {
+	width: 100%;
+}
+
+.slideholder {
+	position: absolute;
+	top: 0;
+	width: 300%;
+	height: 100%;
+	display: flex;
+	transition: margin 1s;
+}
+
+.imgslide {
+	flex-grow: 1;
+	height: 100%;
+}
+
+.imgslide img {
+	margin-top: 26%;
+	width: 26%;
+}
+
+#slide1:checked ~ .slideback .slideholder { margin-left: 0%; }
+#slide2:checked ~ .slideback .slideholder { margin-left: -100%; }
+#slide3:checked ~ .slideback .slideholder { margin-left: -200%; }
+
+/* ************************************
+             SLIDER
+*************************************** */
+
+label {
+	display: inline-block;
+	width: 100px;
+	padding: 5px 0;
+	text-align: center;
+	margin: 0 15px;
+	border: 2px solid hsla(101, 100%, 30%, 1.00);
+	background: hsla(101, 100%, 80%, 1.00);
+	font-size: 24px;
+	border-radius: 10px;
+	transition: background 0.5s, transform 0.15s;
+}
+
+label:hover {
+	background: hsla(101, 100%, 40%, 1.00);
+	cursor: pointer;
+}
+
+label:active {
+	transform: scale(0.9);
+}
+
+/* hide radio button - use attribute selector to get only the radio buttons */
+input[type="radio"] {
+	display: none;
+}
+
+#slide1 ~ label:nth-of-type(1) { 
+	background: hsla(101, 100%, 50%, 1.00);
+    font-weight: bold;
+}
+
+#slide2 ~ label:nth-of-type(2) { 
+	background: hsla(101, 100%, 50%, 1.00);
+    font-weight: bold;
+}
+
+#slide3 ~ label:nth-of-type(3) { 
+	background: hsla(101, 100%, 50%, 1.00);
+    font-weight: bold;
+}
